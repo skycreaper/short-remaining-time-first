@@ -7,6 +7,7 @@ import java.awt.Color;
 /**
  *
  * @author juancsr
+ * @author davidssantoss
  */
 public class Process {
 
@@ -14,17 +15,16 @@ public class Process {
     private boolean ejecutado;
     private boolean listo;
     private boolean duplicado;
-    private int numDuplicado;
     private int timeWasBlocked;
     private int tiempoLlegada;
     private int tiempoLlegadaFront;
-    private int tiempoRafaga; // tiempo de rafaga
-    private int tiempoTotalRafaga; // tiempo total de rafaga
+    private int tiempoRafaga;
+    private int tiempoTotalRafaga;
     private int tiempoComienzo;
     private int tiempoFinalizacion;
     private int tiempoRetorno;
     private int tiempoEspera;
-    private int fila; // fila para pintar en el front
+    private int fila;
     private int filaTabla;
     private Color color;
 
@@ -38,17 +38,18 @@ public class Process {
     public Process(String nombre, int tiempoLlegada, int tiempoLlegadaFront,
             int tiempoRafaga, int tiempoTotalRafaga) {
 
-//        bloqueado = false;
         this.nombre = nombre;
         this.tiempoLlegada = tiempoLlegada;
         this.tiempoLlegadaFront = tiempoLlegadaFront;
         this.tiempoRafaga = tiempoRafaga;
         this.tiempoTotalRafaga = tiempoTotalRafaga;
         this.duplicado = false;
-        this.numDuplicado = 0;
         this.listo = false;
     }
-
+    
+    /**
+     * Calcula los tiempos correspondiente de los procesos
+     */
     public void calculateTimes() {
         tiempoFinalizacion = tiempoRafaga + tiempoComienzo;
 
@@ -59,7 +60,6 @@ public class Process {
             tiempoRetorno = Math.abs(tiempoFinalizacion - tiempoLlegada);
             tiempoEspera = Math.abs(tiempoRetorno - tiempoRafaga);
         }
-
     }
 
     public String getNombre() {

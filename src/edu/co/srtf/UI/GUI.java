@@ -180,7 +180,6 @@ public class GUI extends JFrame {
         pnlDiagram.setBackground(c2);
         pnlDiagram.setLayout(null);
         pnlDiagram.setBounds(0, 475, screenWidth, 225);
-        pnlDiagram.setBorder(BorderFactory.createLineBorder(Color.black));
 
         String columns[] = new String[totalTime + 1];
         String data[][] = new String[processes.size()][totalTime + 1];
@@ -201,7 +200,7 @@ public class GUI extends JFrame {
         diagram.setFillsViewportHeight(true);
 
         JScrollPane scroll = new JScrollPane(diagram);
-        scroll.setBounds(10, 10, screenWidth - 200, 150);
+        scroll.setBounds(10, 10, screenWidth - 50, 150);
 
         pnlDiagram.add(scroll);
     }

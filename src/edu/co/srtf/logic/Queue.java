@@ -2,15 +2,14 @@ package edu.co.srtf.logic;
 
 import edu.co.srtf.UI.GUI;
 import edu.co.srtf.models.Process;
-import edu.co.srtf.util.SortByExecutionTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 /**
  *
- * @author juancamilo
+ * @author juancsr
+ * @author davidssantoss
  */
 public class Queue {
 
@@ -33,7 +32,10 @@ public class Queue {
         });
     }
 
-    public void initProcesses() {
+    /**
+     * Inicializa la cantidad de procesos a ejecutar y les asigna una rafaga
+     */
+    void inicializarProcesos() {
         Process newProcess;
         int tiempoDeEjecucion;
         tiempoTotal = 0;
@@ -79,8 +81,13 @@ public class Queue {
         return procesoEjecucion;
     }
 
+    /**
+     * Botón de acción al hacer clic en el botón "iniciar" de la interfaz
+     *
+     * @param evt
+     */
     void btnStartActionPerformed(java.awt.event.ActionEvent evt) {
-        initProcesses();
+        inicializarProcesos();
         gui.dibujarTabla(procesos);
         gui.dibujarDiagrama(procesos, tiempoTotal);
 
@@ -121,7 +128,7 @@ public class Queue {
                         pintarDiagrama(procesoEjecucion, this);
                         tiempoDeComienzo = procesoEjecucion.getTiempoFinalizacion();
 
-                        procesos.remove(procesoEjecucion); // Aquí finalizó el proceso
+                        procesos.remove(procesoEjecucion);
                     }
                 } catch (InterruptedException e) {
                     System.out.println("Error en hiloPrincipal: " + e.getMessage());
@@ -168,7 +175,7 @@ public class Queue {
     /**
      * Agrega una nueva fila a la tabla
      *
-     * @param proceso
+     * @param proceso es la información del proceso a agregar en la tabla
      */
     private void agregarFilaTabla(Process proceso) {
         gui.addTableRow(proceso.getNombre(),

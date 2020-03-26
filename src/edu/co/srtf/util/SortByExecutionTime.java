@@ -5,6 +5,7 @@ import edu.co.srtf.models.Process;
 /**
  * 
  * @author juancsr
+ * @author davidssantoss
  */
 
 public class SortByExecutionTime implements Comparator<Process> {
