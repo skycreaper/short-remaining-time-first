@@ -66,19 +66,11 @@ public class Queue {
             }
             if (proceso.isListo() && !proceso.equals(procesoEjecucion)) {
                 if (proceso.getTiempoRafaga() < procesoEjecucion.getTiempoRafaga()) {
-                    System.out.println("\tProceso " + proceso.getNombre() + " tiene menos rafaga que " + procesoEjecucion.getNombre());
-                    System.out.println("\t\t** Proceso " + proceso.getNombre() + " remplzado por " + procesoEjecucion.getNombre());
                     procesoEjecucion = proceso;
                 }
                 if (proceso.getTiempoRafaga() == procesoEjecucion.getTiempoRafaga()) {
-                    System.out.println("\tProceso " + proceso.getNombre() + " tiene la misma rafaga que " + procesoEjecucion.getNombre());
                     if (proceso.getTiempoLlegada() < procesoEjecucion.getTiempoLlegada()) {
-                        System.out.println("\t\tProceso " + proceso.getNombre() + " tiene un tiempo de llegada menor que " + procesoEjecucion.getNombre());
-                        System.out.println("\t\t\t** Proceso " + proceso.getNombre() + " remplzado por " + procesoEjecucion.getNombre());
                         procesoEjecucion = proceso;
-                        //return proceso;
-                    } else {
-                        System.out.println("Proceso " + proceso.getNombre() + " tiene más tiempo de llegada que " + procesoEjecucion.getNombre());
                     }
                 }
             }
@@ -96,7 +88,6 @@ public class Queue {
             int tiempoDeComienzo = 0;
             int tiempoRestante = 0;
             boolean primerProceso = true;
-            int i = 0;
             Process procesoEjecucion = null;
 
             @Override
@@ -105,15 +96,12 @@ public class Queue {
                     gui.btnStart.setEnabled(false);
 
                     while (procesos.size() > 0) {
-                        imprimirProcesos();
 
                         procesoEjecucion = procesos.get(0);
                         procesoEjecucion.setListo(true);
-                        System.out.println("-- ** Proceso " + procesoEjecucion.getNombre() + " ejecutándose ** --");
 
                         if (primerProceso) {
-                            if (procesoEjecucion.getTiempoRafaga() > procesos.get(i + 1).getTiempoRafaga()) {
-                                System.out.println("El primer proceso " + procesoEjecucion.getNombre() + " se cambio por " + procesos.get(i + 1).getNombre());
+                            if (procesoEjecucion.getTiempoRafaga() > procesos.get(1).getTiempoRafaga()) {
                                 tiempoDeComienzo = 1;
                                 agregarProcesoPendiente(procesoEjecucion);
                                 pintarDiagrama(procesoEjecucion, this);
@@ -132,13 +120,9 @@ public class Queue {
 
                         pintarDiagrama(procesoEjecucion, this);
                         tiempoDeComienzo = procesoEjecucion.getTiempoFinalizacion();
-                        i = procesoEjecucion.getFila();
-                        System.out.println("i = " + i);
 
-                        System.out.println("Proceso " + procesoEjecucion.getNombre() + " finalizado");
                         procesos.remove(procesoEjecucion); // Aquí finalizó el proceso
                     }
-                    System.out.println("Todos lor procesos finalizados");
                 } catch (InterruptedException e) {
                     System.out.println("Error en hiloPrincipal: " + e.getMessage());
                 } finally {
@@ -215,22 +199,9 @@ public class Queue {
         procesos.add(pendiente);
         procesos.remove(procesoOriginal);
 
-        imprimirProcesos();
         procesoOriginal.setTiempoRafaga(1);
         procesoOriginal.calculateTimes();
         agregarInfoTabla(procesoOriginal);
         agregarFilaTabla(pendiente);
     }
-
-    /**
-     * Imprime información de todos los procesos, debug
-     */
-    private void imprimirProcesos() {
-        System.out.println("************ PROCESOS ************");
-        for (Process proceso : procesos) {
-            System.out.println("Proceso " + proceso.getNombre() + " listo: " + proceso.isListo());
-        }
-        System.out.println("***********************************\n");
-    }
-
 }
